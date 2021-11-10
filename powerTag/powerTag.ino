@@ -86,7 +86,7 @@ void loop() {
            
               HTTPClient http;    //Declare object of class HTTPClient
            
-              http.begin("http://192.168.1.6:3300/add");      //Specify request destination
+              http.begin("http://192.168.1.7:3300/add");      //Specify request destination
               http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
               String macID = String(WiFi.macAddress());
               int httpCode = http.POST("data="+String(data)+"&MAC="+macID);   //Send the request

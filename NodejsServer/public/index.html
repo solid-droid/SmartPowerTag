@@ -1,6 +1,57 @@
 <html>
+    <HEAD>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./main.css"></link>
+        <link rel="stylesheet" href="./font_barlow.css"></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"></link>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+        <title>Smart Home Dashboard</title>
     <body>
-        <H1>hello</H1>
+        <div class="head">
+            <div class="head_text">Smart Home Dashboard</div>
+            <div class="head_buttons">
+                <div class="button devices">
+                    <i class="fas fa-laptop-house btn1 active"></i>
+                </div>
+                <div class="button camera">
+                    <i class="fas fa-video btn2"></i>
+                </div>
+                <div class="button analytics">
+                    <i class="fas fa-chart-pie btn3"></i>
+                </div>
+            </div>
+        </div>
+        <div class="content content1">
+            <div class= "title">
+                <div class="title_text">Device Status</div>
+            </div>
+            <div class="deviceList">
+
+            </div>
+        </div>
+        <div class="content content3">
+            <div class= "title">
+                <div class="title_text">Security Camera</div>
+            </div>
+            <div class="frameContainer">
+                <div>
+                    <div style="font-weight: bold;">CAM1</div>
+                    <iframe src="http://192.168.1.111/mjpeg/1" title="Live Feed"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="content content2">
+            <div class= "title">
+                <div class="title_text">Analytics</div>
+            </div>
+            <div id="chartContainer">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="./main.js"></script>
     </body>
 </html>
