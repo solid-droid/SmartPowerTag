@@ -31,32 +31,35 @@ app.get('/getList', (req, res) => {
 
 app.post('/add', async (req, res) => {
     try{
-        const state = parseInt(req.body.data,10) > 50 ? "ON" : "OFF";
+        const state = req.body.state == 1 ? "ON" : "OFF";
+        const smoke = req.body.smoke == 1 ? "ON" : "OFF";;
         const id = req.body.MAC.replaceAll(':','_');
         const time = new Date();
-        console.log('start');
         store.load('index', (err1, object1) => {
                 if(err1){
                     store.add({id:'index', content:[id]}, err => {if (err) throw err });
                 }else{
                     const content = object1.content;
-                    content.push(id);
-                    store.add({id:'index', content}, err => {if (err) throw err });
+                    if(!content.includes(id)){
+                        content.push(id);
+                        store.add({id:'index', content}, err => {if (err) throw err });
+                    }
                 }
                 store.load(id, (err, object) => {
                     if(err)
                     {
-                        store.add({id,state,time, past:[]}, err => {if (err) throw err });
+                        store.add({id,state,smoke,time, past:[]}, err => {if (err) throw err });
                     } else{
                         const _state = object.state;
+                        const _smoke = object.smoke;
                         const _time = object.time;
                         const _past = object.past;
 
                         const diffMs = (time - new Date(_time));
                         const duration = (((diffMs % 86400000) % 3600000) / 60000).toFixed(2); // minutes
 
-                        _past.unshift({state:_state, time:_time, duration:duration});
-                        store.add({id,state,time, past:_past}, err => {if (err) throw err });
+                        _past.unshift({state:_state, time:_time, duration:duration, smoke:_smoke});
+                        store.add({id,state,smoke, time, past:_past}, err => {if (err) throw err });
                     }
 
                 });

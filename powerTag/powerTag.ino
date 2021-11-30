@@ -2,14 +2,14 @@
 #include <ESP8266HTTPClient.h>
 #include <espnow.h>
 #include <EEPROM.h>
-#define EEPROM_SIZE 1
+#define EEPROM_SIZE 2
 
 const int analogInPin = A0;  // ESP8266 Analog Pin ADC0 = A0
 
 //MAC Address of the receiver 
 uint8_t peer1[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
-int data; 
+bool smoke = false, state = false; 
 #define SSID1 "SSID1-2.4G"
 #define PWD1 "12345678"
 
@@ -21,8 +21,9 @@ void onSent(uint8_t *mac_addr, uint8_t sendStatus) {
 void setup() {
   // initialize serial communication at 115200
   Serial.begin(115200);
-  pinMode(BUILTIN_LED, OUTPUT);
-
+//  pinMode(BUILTIN_LED, OUTPUT);
+  pinMode(D2, INPUT);
+  pinMode(D0, INPUT);
   EEPROM.begin(EEPROM_SIZE);
 
   // Set device as a Wi-Fi Station
@@ -54,44 +55,69 @@ void setup() {
 }
 
 typedef struct struct_message {
-    int reading;
+    bool state;
+    bool smoke;
 } struct_message;
 
 struct_message myData;
 
 void loop() {
-  // read the analog in value
-  data  = analogRead(analogInPin);
-  bool state = false;
-  // print the readings in the Serial Monitor
-  Serial.print("sensor = ");
-  Serial.println(data );
-  if(data  > 50){
-    state = false;
-    digitalWrite(BUILTIN_LED, LOW);
-  } else {
-     state = true;
-     digitalWrite(BUILTIN_LED, HIGH);
-  }
-  bool savedState;
-  EEPROM.get(0, savedState);
-  if(savedState != state){
+////////////////////////////---If current sensor--////////////////////////////////////////////////////
 
-            
-            myData.reading = data;
+//  int data  = analogRead(analogInPin);
+//  Serial.print("sensor = ");
+//  Serial.println(data );
+//    if(data  > 50){
+//    state = true;
+//    digitalWrite(BUILTIN_LED, LOW);
+//  } else {
+//     state = false;
+//     digitalWrite(BUILTIN_LED, HIGH);
+//  }
+
+///////////////////////////--If LDR sensor---////////////////////////////////////////////////////////
+
+  state = !digitalRead(D2);
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //smoke on D1
+  smoke = !digitalRead(D1);
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  bool savedState, savedSmoke;
+  EEPROM.get(0, savedState);
+  EEPROM.get(1, savedSmoke);
+  if(savedSmoke != 1 && savedSmoke != 0){
+       EEPROM.write(1, smoke);
+       EEPROM.commit();
+       savedSmoke = smoke;
+  }
+  if(savedState != 1 && savedState != 0){
+       EEPROM.write(1, state);
+       EEPROM.commit();
+       savedState = state;
+  }
+  if(savedState != state || savedSmoke != smoke){           
+            myData.state = state;
+            myData.smoke = smoke;
             esp_now_send(NULL, (uint8_t *) &myData, sizeof(myData));
-            EEPROM.put(0, state);
+            EEPROM.write(0, state);
+            EEPROM.commit();
+            EEPROM.write(1, smoke);
             EEPROM.commit();
             if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
-           
               HTTPClient http;    //Declare object of class HTTPClient
            
-              http.begin("http://192.168.1.9:3300/add");      //Specify request destination
+              http.begin("http://192.168.1.7:3300/add");      //Specify request destination
               http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
               String macID = String(WiFi.macAddress());
-              int httpCode = http.POST("data="+String(data)+"&MAC="+macID);   //Send the request
+              String _state = state? "1":"0";
+              String _smoke = smoke?"1":"0";
+              String msg = "state="+_state+
+                           "&smoke="+_smoke+
+                           "&MAC="+macID;
+              int httpCode = http.POST(msg);   //Send the request
               String payload = http.getString();                  //Get the response payload
-           
               Serial.println(httpCode);   //Print HTTP return code
               Serial.println(payload);    //Print request response payload
            
@@ -103,5 +129,6 @@ void loop() {
            
               }
   }  
-    ESP.deepSleep(30e6);
+//  delay(5000);
+    ESP.deepSleep(10e6);
 }
