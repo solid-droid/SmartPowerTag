@@ -64,20 +64,20 @@ struct_message myData;
 void loop() {
 ////////////////////////////---If current sensor--////////////////////////////////////////////////////
 
-  int data  = analogRead(analogInPin);
-  Serial.print("sensor = ");
-  Serial.println(data );
-    if(data  > 50){
-    state = true;
-    digitalWrite(BUILTIN_LED, LOW);
-  } else {
-     state = false;
-     digitalWrite(BUILTIN_LED, HIGH);
-  }
+//  int data  = analogRead(analogInPin);
+//  Serial.print("sensor = ");
+//  Serial.println(data );
+//    if(data  > 50){
+//    state = true;
+//    digitalWrite(BUILTIN_LED, LOW);
+//  } else {
+//     state = false;
+//     digitalWrite(BUILTIN_LED, HIGH);
+//  }
 
 ///////////////////////////--If LDR sensor---////////////////////////////////////////////////////////
 
-//  state = !digitalRead(D2);
+  state = !digitalRead(D2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //smoke on D1

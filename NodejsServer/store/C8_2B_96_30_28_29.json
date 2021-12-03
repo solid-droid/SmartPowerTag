@@ -1,8 +1,62 @@
 {
   "id": "C8_2B_96_30_28_29",
   "state": "OFF",
-  "time": "2021-11-11T14:59:27.817Z",
+  "smoke": "OFF",
+  "time": "2021-12-03T16:45:29.591Z",
   "past": [
+    {
+      "state": "ON",
+      "time": "2021-12-03T16:45:03.171Z",
+      "duration": "0.44",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T16:44:16.198Z",
+      "duration": "0.78",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-12-03T16:43:48.834Z",
+      "duration": "0.46",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T16:40:32.744Z",
+      "duration": "3.27",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-12-03T16:39:56.280Z",
+      "duration": "0.61",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T16:38:04.728Z",
+      "duration": "1.86",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-12-03T16:37:42.447Z",
+      "duration": "0.37",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T16:32:20.400Z",
+      "duration": "5.37",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-11-11T14:59:27.817Z",
+      "duration": "32.88"
+    },
     {
       "state": "ON",
       "time": "2021-11-11T14:58:23.024Z",

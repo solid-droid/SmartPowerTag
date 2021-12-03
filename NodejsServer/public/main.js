@@ -99,8 +99,8 @@ const init = () => {
             backgroundColor: [
                 "#2ecc71",
                 "#3498db",
-                "#95a5a6",
                 "#9b59b6",
+                "#95a5a6",
                 "#f1c40f",
                 "#e74c3c",
                 "#34495e"
@@ -128,8 +128,8 @@ const init = () => {
             backgroundColor: [
                 "#2ecc71",
                 "#3498db",
-                "#95a5a6",
                 "#9b59b6",
+                "#95a5a6",
                 "#f1c40f",
                 "#e74c3c",
                 "#34495e"
