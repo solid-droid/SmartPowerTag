@@ -108,7 +108,7 @@ void loop() {
             if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
               HTTPClient http;    //Declare object of class HTTPClient
            
-              http.begin("http://192.168.1.7:3300/add");      //Specify request destination
+              http.begin("http://192.168.1.4:3300/add");      //Specify request destination
               http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
               String macID = String(WiFi.macAddress());
               String _state = state? "1":"0";

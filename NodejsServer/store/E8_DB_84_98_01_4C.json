@@ -2,8 +2,44 @@
   "id": "E8_DB_84_98_01_4C",
   "state": "ON",
   "smoke": "OFF",
-  "time": "2021-11-30T15:54:38.255Z",
+  "time": "2021-12-03T16:01:41.950Z",
   "past": [
+    {
+      "state": "OFF",
+      "time": "2021-12-03T16:01:26.586Z",
+      "duration": "0.26",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-12-03T15:25:50.555Z",
+      "duration": "35.60",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T14:57:33.245Z",
+      "duration": "28.29",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-12-03T14:44:42.277Z",
+      "duration": "12.85",
+      "smoke": "OFF"
+    },
+    {
+      "state": "OFF",
+      "time": "2021-12-03T14:44:26.825Z",
+      "duration": "0.26",
+      "smoke": "OFF"
+    },
+    {
+      "state": "ON",
+      "time": "2021-11-30T15:54:38.255Z",
+      "duration": "49.81",
+      "smoke": "OFF"
+    },
     {
       "state": "OFF",
       "time": "2021-11-30T15:54:22.361Z",

@@ -1,7 +1,7 @@
 const getList = async () => await (await fetch('http://localhost:3300/getList')).json();
 const getData = async (id) => await (await fetch(`http://localhost:3300/getStatus/${id}`)).json();
 var myChart1, myChart2;
-var watt = [50, 10]
+var watt = [50, 10, 10]
 const fullList = {};
 async function main() {
     const list = (await getList()).data;
@@ -9,7 +9,7 @@ async function main() {
         const data = await getData(id);
         let duration = new Date() - new Date(data.time);
         duration = (((duration % 86400000) % 3600000) / 60000).toFixed(2); // minutes
-        fullList[id] = [{data: data.state, time: data.time, duration},...data.past]; 
+        fullList[id] = [{data: data.state, smoke: data.smoke, time: data.time, duration},...data.past]; 
         if(index === list.length - 1) {
             await new Promise(resolve => setTimeout(resolve, 100));
             $(".deviceList").empty();
@@ -28,7 +28,7 @@ async function main() {
 
                 OnTimeList.push(OnTime);
 
-                buildDevice(device.replaceAll('_',':'), fullList[device][0].data, 'Device '+idx, fullList[device][0].duration);
+                buildDevice(device.replaceAll('_',':'), fullList[device][0].data, fullList[device][0].smoke, 'Device '+idx, fullList[device][0].duration);
             });
 
             const total = OnTimeList.reduce((a,b)=>a+b);
@@ -47,12 +47,15 @@ async function main() {
 
 }
 
-const buildDevice = (id = "undefined", status = "ON" , title = "Device", time= 0) => {
+const buildDevice = (id = "undefined", status = "ON" , smoke = "OFF", title = "Device", time= 0) => {
     $(".deviceList").append(`
-    <div class='deviceItem ${status}scale'> 
+    <div class='deviceItem scale'> 
         <div class="${id}_title devicetitle"> ${title} </div>
         <div class="${id}_id deviceid"> ${id} </div>
-        <div class="${id}_status devicestatus ${status}">${status}</div> 
+        <div class="${id}_status devicestatus ${smoke == 'OFF' ? status : 'RED'}">
+        <div class="state">${status}</div>
+        <div class="smoke">${smoke == 'OFF' ? 'No Smoke' : 'Smoke Detected'}</div>
+        </div> 
         <div class="${id}_time devicetime">${status} for ${time} Mts</div>
     </div>`);
 }
